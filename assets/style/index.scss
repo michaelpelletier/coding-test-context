@@ -1,0 +1,18 @@
+@charset 'UTF-8';
+@use 'sass:math';
+
+@import './variables';
+@import './mixins';
+
+* {
+	box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../NeueMontreal-Regular.otf') format('opentype'),
+}
+
+body {
+	font-family: 'Neue Montreal',-apple-system,Roboto,Helvetica,Aria,sans-serif;
+}

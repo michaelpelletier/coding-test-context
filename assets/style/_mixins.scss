@@ -1,0 +1,83 @@
+@mixin button {
+	appearance: none;
+	background-color: $c-spot;
+	border: 0;
+	border-radius: 8px;
+	color: $c-white;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.035em;
+	line-height: 1.25;
+	padding: 12px 24px;
+  transition: background-color 0.3s ease-in-out;
+  will-change: background-color;
+
+  &:hover {
+    background-color: $c-black;
+  }
+}
+
+@mixin label {
+	display: block;
+	color: $c-grey-light;
+	font-size: 16px;
+	font-weight: normal;
+	padding: 5px 0;
+	text-align: left;
+}
+
+@mixin input {
+	border: 1px solid $c-grey-lightest;
+	background-color: $c-white;
+	border-radius: 4px;
+	color: $c-black;
+	font-size: 16px;
+	padding: 8px;
+	width: 100%;
+}
+
+@function strip-units($number) {
+  @return math.div($number, $number * 0 + 1);
+}
+
+@mixin mq($bp-1, $bp-2: null) {
+  @if $bp-1 == 'max' {
+    @media (max-width: $bp-2 - 1) {
+      @content;
+    }
+  } @else if $bp-2 == 'max' {
+    @media (max-width: $bp-1 - 1) {
+      @content;
+    }
+  } @else if $bp-2 == null {
+    @media (min-width: $bp-1) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $bp-1) and (max-width: $bp-2 - 1) {
+      @content;
+    }
+  }
+}
+
+@mixin big-text() {
+  $min-size: 40px;
+  $max-size: 80px;
+  $min-width: 400px;
+  $max-width: 1400px;
+
+  font-size: $min-size;
+  line-height: 1;
+
+  @include mq($min-width, $max-width) {
+    $size: calc(
+      #{$min-size} + (#{strip-units($max-size)} - #{strip-units($min-size)}) * (100vw - #{$min-width}) / (#{strip-units($max-width)} - #{strip-units($min-width)}));
+
+    font-size: $size;
+  }
+
+  @include mq($max-width) {
+    font-size: $max-size;
+  }
+}
